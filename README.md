@@ -2,6 +2,12 @@
 
 This is a full-stack web application developed using **Spring Boot** for the backend and **Angular** for the frontend. The system serves as a **Learning Management System (LMS)** for a university and functions as its official public website.
 
+## 🎥 Demo Video
+
+👉 [Click here to watch the demo video](https://youtu.be/zDmOwWpcnQM?si=o7hUJuqtPl0MFQIm)
+
+---
+
 ## 🔐 Authentication & Authorization
 
 - Authentication is implemented using **JWT (JSON Web Token)**.
@@ -10,19 +16,25 @@ This is a full-stack web application developed using **Spring Boot** for the bac
   - Students
   - Teachers
   - Student Services Staff
+  - Commercialist
   - Administrators
 - **Postman** was used for backend API testing.
 
 ## 🧰 Technologies Used
 
 ### Backend
-- Spring Boot
-- Spring Security + JWT
+- Spring Boot 3.4.4
+- Java 24
+- Spring Security + JWT (`io.jsonwebtoken`)
 - MySQL Server (managed via MySQL Workbench)
 - Apache Jena TDB (for RDF storage)
 - Hibernate + JPA
 - Lombok
 - PDF & XML export/import
+- iText PDF generator
+- JAXB for XML (import/export)
+- WebSocket + Spring Security Messaging
+- Jackson for JSON binding
 
 ### Frontend
 - Angular
