@@ -13,5 +13,12 @@ import org.springframework.stereotype.Repository;
 public interface PohadjanjePredmetaRepository extends JpaRepository<PohadjanjePredmeta, Long> {
 	@Query("SELECT pp FROM PohadjanjePredmeta pp JOIN FETCH pp.predmet WHERE pp.student.id = :studentId")
 	List<PohadjanjePredmeta> findByStudentId(@Param("studentId") Long studentId);
+	
+	@Query("SELECT p FROM PohadjanjePredmeta p WHERE p.predmet.id = :predmetId")
 	List<PohadjanjePredmeta> findByPredmetId(Long predmetId);
+	
+	@Query("SELECT pp FROM PohadjanjePredmeta pp " +
+		       "WHERE pp.predmet.id IN (" +
+		       "SELECT p.predmet.id FROM ProfesorPredmet p WHERE p.profesor.id = :profesorId)")
+		List<PohadjanjePredmeta> findByProfesorId(@Param("profesorId") Long profesorId);
 }

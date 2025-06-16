@@ -1,5 +1,7 @@
 package com.unidunav.student.dto;
 
+import java.util.List;
+
 public class StudentDTO {
 
     private Long id;
@@ -12,8 +14,27 @@ public class StudentDTO {
     private String prezime;
     
     private String slikaPath;
+    
+    private String zavrsniRad;
+    private List<String> predmeti;
 
-    public String getSlikaPath() {
+    public String getZavrsniRad() {
+		return zavrsniRad;
+	}
+
+	public void setZavrsniRad(String zavrsniRad) {
+		this.zavrsniRad = zavrsniRad;
+	}
+
+	public List<String> getPredmeti() {
+		return predmeti;
+	}
+
+	public void setPredmeti(List<String> predmeti) {
+		this.predmeti = predmeti;
+	}
+
+	public String getSlikaPath() {
         return slikaPath;
     }
 

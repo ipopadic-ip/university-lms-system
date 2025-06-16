@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.unidunav.predmet.dto.IstorijaStudiranjaDTO;
 import com.unidunav.predmet.dto.StudentIstorijaStudiranjaResponseDTO;
+import com.unidunav.predmet.dto.StudentIstorijaStudiranjaResponseDTOProfesor;
 import com.unidunav.predmet.dto.PohadjanjePredmetaDTO;
 import com.unidunav.predmet.model.PohadjanjePredmeta;
 import com.unidunav.predmet.model.Predmet;
@@ -18,6 +19,7 @@ import com.unidunav.predmet.repository.PredmetRepository;
 import com.unidunav.student.model.Student;
 import com.unidunav.student.repository.StudentRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -129,6 +131,44 @@ public class PohadjanjePredmetaServiceImpl implements PohadjanjePredmetaService 
             .sum();
 
         return new StudentIstorijaStudiranjaResponseDTO(predmetiDTO, prosecnaOcena, ukupnoECTS);
+    }
+    
+    public StudentIstorijaStudiranjaResponseDTOProfesor getIstorijaStudiranjaZaProfesora(Long studentId) {
+        List<PohadjanjePredmeta> pohadjanja = repository.findByStudentId(studentId);
+
+        List<IstorijaStudiranjaDTO> predmetiDTO = pohadjanja.stream()
+            .map(p -> new IstorijaStudiranjaDTO(
+                    p.getPredmet().getNaziv(),
+                    p.getBrojPolaganja(),
+                    p.getOcena(), 
+                    p.getPredmet().getEcts()
+            ))
+            .collect(Collectors.toList());
+
+        // Računanje prosečne ocene i ECTS
+        List<Integer> ocene = pohadjanja.stream()
+            .map(PohadjanjePredmeta::getOcena)
+            .filter(o -> o != null)
+            .collect(Collectors.toList());
+
+        double prosecnaOcena = ocene.isEmpty() ? 0.0 :
+            ocene.stream().mapToInt(o -> o).average().orElse(0.0);
+
+        int ukupnoECTS = pohadjanja.stream()
+            .filter(p -> p.getOcena() != null) 
+            .mapToInt(p -> p.getPredmet().getEcts())
+            .sum();
+
+        return new StudentIstorijaStudiranjaResponseDTOProfesor(
+        	    new ArrayList<>(),         // upisi
+        	    predmetiDTO,               // polozeni (ili neka odgovarajuća lista)
+        	    new ArrayList<>(),         // neuspesni
+        	    new ArrayList<>(),         // prijavljeni
+        	    new ArrayList<>(),         // prestupi
+        	    null,                      // zavrsni rad
+        	    prosecnaOcena,
+        	    ukupnoECTS
+        	);
     }
     
     @Override

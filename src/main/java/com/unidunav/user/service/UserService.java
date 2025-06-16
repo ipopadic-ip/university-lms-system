@@ -98,18 +98,20 @@ public class UserService {
 //                    s.setBrojIndeksa("BR-" + user.getId()); 
 //                    s.setGodinaUpisa(LocalDate.now().getYear());
                     studentRepository.save(s);
-                } else if (!imaRoluStudent && studentRepository.existsById(user.getId())) {
-                    studentRepository.deleteById(user.getId());
-                }
+                } 
+//                else if (!imaRoluStudent && studentRepository.existsById(user.getId())) {
+//                    studentRepository.deleteById(user.getId());
+//                }
 
                 // PROFESOR
                 if (imaRoluProfesor && !profesorRepository.existsById(user.getId())) {
                     Profesor p = new Profesor();
                     p.setUser(user);
                     profesorRepository.save(p);
-                } else if (!imaRoluProfesor && profesorRepository.existsById(user.getId())) {
-                    profesorRepository.deleteById(user.getId());
-                }
+                } 
+//                else if (!imaRoluProfesor && profesorRepository.existsById(user.getId())) {
+//                    profesorRepository.deleteById(user.getId());
+//                }
                 
             }
 

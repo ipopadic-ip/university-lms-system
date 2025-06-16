@@ -497,6 +497,7 @@ public class RdfTipStudijaService {
             }
         } finally {
             dataset.end();
+            dataset.close();
         }
         return result;
     }

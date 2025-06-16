@@ -1,5 +1,6 @@
 package com.unidunav.profesor.controller;
 
+import com.unidunav.predmet.dto.PredmetDTO;
 import com.unidunav.profesor.dto.ProfesorDTO;
 import com.unidunav.profesorPredmet.dto.ProfesorPredmetResponseDTO;
 import com.unidunav.profesor.service.ProfesorService;
@@ -8,6 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import org.springframework.security.core.Authentication;
+import com.unidunav.user.model.User;
 
 import java.util.List;
 
@@ -63,4 +67,30 @@ public class ProfesorController {
     public List<ProfesorDTO> getAllProfesori() {
         return service.findAll();
     }
+    
+    @GetMapping("/{id}/predmeti")
+    @PreAuthorize("hasRole('PROFESOR') or #id == authentication.principal.id")
+    public List<PredmetDTO> getPredmetiZaProfesora(@PathVariable Long id) {
+        return service.findPredmetiByProfesorId(id);
+    }
+    
+    @GetMapping("/profil")
+    public ProfesorDTO getProfil(Authentication auth) {
+        User user = (User) auth.getPrincipal();
+        return service.getProfilByUserId(user.getId());
+    }
+
+    @PutMapping("/profil")
+    public ProfesorDTO izmeniProfil(Authentication auth,
+        @RequestParam String ime,
+        @RequestParam String prezime,
+        @RequestParam(required = false) String staraLozinka,
+        @RequestParam(required = false) String novaLozinka,
+        @RequestParam String biografija,
+        @RequestParam(value = "slika", required = false) MultipartFile slika
+    ) {
+        User user = (User) auth.getPrincipal();
+        return service.izmeniProfil(user.getId(), ime, prezime, staraLozinka, novaLozinka, biografija, slika);
+    }
+
 }

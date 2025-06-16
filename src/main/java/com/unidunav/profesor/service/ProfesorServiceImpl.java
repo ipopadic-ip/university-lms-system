@@ -1,11 +1,17 @@
 package com.unidunav.profesor.service;
 
+import com.unidunav.predmet.dto.PredmetDTO;
+import com.unidunav.predmet.model.Predmet;
 import com.unidunav.profesor.dto.ProfesorDTO;
 import com.unidunav.profesor.model.Profesor;
 import com.unidunav.profesor.repository.ProfesorRepository;
+import com.unidunav.profesorPredmet.model.ProfesorPredmet;
+import com.unidunav.profesorPredmet.repository.ProfesorPredmetRepository;
+import com.unidunav.user.model.User;
 import com.unidunav.user.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,6 +30,11 @@ public class ProfesorServiceImpl implements ProfesorService {
     @Autowired
     private ProfesorRepository repository;
     
+    @Autowired
+    private ProfesorPredmetRepository profesorPredmetRepository;
+    
+    @Autowired
+    private UserRepository userRepository;
 
 
     public ProfesorDTO toDTO(Profesor profesor) {
@@ -114,4 +125,65 @@ public class ProfesorServiceImpl implements ProfesorService {
 
         return filePath.toString();
     }
+    
+    @Override
+    public List<PredmetDTO> findPredmetiByProfesorId(Long profesorId) {
+        List<ProfesorPredmet> veze = profesorPredmetRepository.findByProfesorId(profesorId);
+        return veze.stream()
+            .map(veza -> {
+                Predmet predmet = veza.getPredmet();
+                return new PredmetDTO(
+                    predmet.getId(),
+                    predmet.getNaziv(),
+                    predmet.getEcts(),
+                    predmet.getInformacijeOPredmetu(),
+                    predmet.getGodinaStudija().getId()
+                );
+            })
+            .collect(Collectors.toList());
+    }
+    
+    @Override
+    public ProfesorDTO getProfilByUserId(Long userId) {
+        Profesor profesor = repository.findByUserId(userId).orElseThrow(() -> new RuntimeException("Profesor nije pronađen"));
+        return toDTO(profesor);
+    }
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    
+    @Override
+    public ProfesorDTO izmeniProfil(Long userId, String ime, String prezime,
+                                    String staraLozinka, String novaLozinka,
+                                    String biografija, MultipartFile slika) {
+        Profesor profesor = repository.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("Profesor nije pronađen"));
+
+        User user = profesor.getUser();
+        user.setIme(ime);
+        user.setPrezime(prezime);
+
+        if (staraLozinka != null && novaLozinka != null && !novaLozinka.isEmpty()) {
+            if (!passwordEncoder.matches(staraLozinka, user.getPassword())) {
+                throw new RuntimeException("Stara lozinka nije tačna.");
+            }
+            user.setPassword(passwordEncoder.encode(novaLozinka));
+        }
+        userRepository.save(user);
+
+        profesor.setBiografija(biografija);
+
+        if (slika != null && !slika.isEmpty()) {
+            try {
+                String putanja = uploadSlika(profesor.getId(), slika);
+                profesor.setSlikaPath(putanja);
+            } catch (IOException e) {
+                throw new RuntimeException("Greška pri snimanju slike: " + e.getMessage(), e);
+            }
+        }
+
+        repository.save(profesor);
+        return toDTO(profesor);
+    }
+
 }

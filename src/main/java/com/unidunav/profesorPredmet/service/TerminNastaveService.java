@@ -84,6 +84,36 @@ public class TerminNastaveService {
         return dto;
     }
     
+    private TerminNastaveResponseDTO toResponseDTO(TerminNastave termin) {
+        TerminNastaveResponseDTO dto = new TerminNastaveResponseDTO();
+        dto.setId(termin.getId());
+        dto.setTerminPocetka(termin.getTerminPocetka());
+        dto.setTerminZavrsetka(termin.getTerminZavrsetka());
+
+        if (termin.getProfesorPredmet() != null && termin.getProfesorPredmet().getPredmet() != null) {
+            dto.setNazivPredmeta(termin.getProfesorPredmet().getPredmet().getNaziv());
+        } else {
+            dto.setNazivPredmeta("Nepoznat predmet");
+        }
+
+        dto.setIshodTema(termin.getIshod());;
+
+        return dto;
+    }
+    
+    public List<TerminNastaveResponseDTO> sviZaProfesorPredmet(Long id) {
+        return terminRepo.findByProfesorPredmetId(id).stream()
+                .map(this::toResponseDTO)
+                .collect(Collectors.toList());
+    }
+    
+    public void azurirajIshod(Long id, String noviIshod) {
+        TerminNastave termin = terminRepo.findById(id)
+            .orElseThrow(() -> new RuntimeException("Termin nije pronađen"));
+        termin.setIshod(noviIshod);
+        terminRepo.save(termin);
+    }
+
 //    public TerminNastaveResponseDTO kreiraj(TerminNastaveDTO dto) {
 //        String email = SecurityContextHolder.getContext().getAuthentication().getName();
 //        User autor = userRepo.findByEmail(email).orElseThrow(() -> new RuntimeException("Korisnik nije pronađen"));
@@ -101,9 +131,9 @@ public class TerminNastaveService {
 //
 //        return mapToDTO(sacuvan);
 //    }
-
+    
 //    public List<TerminNastaveResponseDTO> sviZaProfesorPredmet(Long id) {
-//        return repo.findByProfesorPredmetId(id).stream()
+//        return terminRepo.findByProfesorPredmetId(id).stream()
 //                .map(this::mapToDTO)
 //                .collect(Collectors.toList());
 //    }

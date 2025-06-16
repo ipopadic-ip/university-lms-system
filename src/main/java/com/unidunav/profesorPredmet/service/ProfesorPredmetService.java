@@ -8,6 +8,8 @@ import com.unidunav.profesorPredmet.dto.ProfesorPredmetDTO;
 import com.unidunav.profesorPredmet.dto.ProfesorPredmetResponseDTO;
 import com.unidunav.profesorPredmet.model.ProfesorPredmet;
 import com.unidunav.profesorPredmet.repository.ProfesorPredmetRepository;
+
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -135,6 +137,26 @@ public class ProfesorPredmetService {
             throw new RuntimeException("Veza profesor-predmet nije pronađena");
         }
         repository.deleteById(id);
+    }
+    
+    public List<ProfesorPredmetResponseDTO> mojiPredmeti() {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        Profesor profesor = profesorRepo.findByUser_Email(email)
+            .orElseThrow(() -> new RuntimeException("Profesor nije pronađen"));
+
+        return repository.findByProfesorId(profesor.getId()).stream()
+            .map(this::toResponseDTO)
+            .toList();
+    }
+
+    private ProfesorPredmetResponseDTO toResponseDTO(ProfesorPredmet pp) {
+        ProfesorPredmetResponseDTO dto = new ProfesorPredmetResponseDTO();
+        dto.setId(pp.getId());
+        dto.setProfesorId(pp.getProfesor().getId());
+        dto.setPredmetId(pp.getPredmet().getId());
+        dto.setPredmetNaziv(pp.getPredmet().getNaziv());
+        return dto;
     }
 
 }

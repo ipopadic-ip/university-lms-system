@@ -8,6 +8,22 @@ public class TerminNastaveResponseDTO {
 	    private LocalDateTime terminZavrsetka;
 	    private String autorIme;
 	    private Long profesorPredmetId;
+	    
+	    private String nazivPredmeta;
+        private String ishodTema;
+        
+		public String getNazivPredmeta() {
+			return nazivPredmeta;
+		}
+		public void setNazivPredmeta(String nazivPredmeta) {
+			this.nazivPredmeta = nazivPredmeta;
+		}
+		public String getIshodTema() {
+			return ishodTema;
+		}
+		public void setIshodTema(String ishodTema) {
+			this.ishodTema = ishodTema;
+		}
 		public Long getId() {
 			return id;
 		}

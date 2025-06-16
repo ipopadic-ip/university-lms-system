@@ -2,7 +2,9 @@ package com.unidunav.student.service;
 
 import com.unidunav.obavestenje.dto.ObavestenjeStudentuDTO;
 import com.unidunav.predmet.dto.PredmetDTO;
+import com.unidunav.predmet.dto.StudentIstorijaStudiranjaResponseDTOProfesor;
 import com.unidunav.student.dto.StudentDTO;
+import com.unidunav.student.dto.StudentPredmetDTO;
 
 import java.io.IOException;
 import java.util.List;
@@ -21,4 +23,8 @@ public interface StudentService {
     List<PredmetDTO> getPredmetiKojeStudentSlusa(Long studentId);
     List<ObavestenjeStudentuDTO> getObavestenjaZaStudenta(Long studentId);
     List<StudentDTO> findByBrojIndeksa(String indeks);
+    
+    List<StudentDTO> findStudentiZaProfesora(Long profesorId);
+    StudentIstorijaStudiranjaResponseDTOProfesor getStudentIstorijaStudiranjaProfesor(Long studentId);
+    List<StudentPredmetDTO> findStudentiZaPredmet(Long predmetId);
 }

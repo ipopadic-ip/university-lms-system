@@ -12,5 +12,6 @@ public interface ProfesorPredmetRepository extends JpaRepository<ProfesorPredmet
     List<ProfesorPredmet> findByDeletedFalse();
 
     List<ProfesorPredmet> findByProfesorIdAndDeletedFalse(Long profesorId);
-
+    List<ProfesorPredmet> findByPredmetIdAndDeletedFalse(Long predmetId);
+    
 }

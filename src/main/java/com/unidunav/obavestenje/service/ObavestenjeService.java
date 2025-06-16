@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -41,8 +42,11 @@ public class ObavestenjeService {
         Predmet predmet = predmetRepo.findById(dto.getPredmetId())
             .orElseThrow(() -> new RuntimeException("Predmet nije pronađen"));
 
+     // Ako datum nije prosleđen – automatski ga postavljamo
+        LocalDate datumZaUpis = dto.getDatum() != null ? dto.getDatum() : LocalDate.now();
+        
         // Kreiranje i čuvanje obaveštenja
-        Obavestenje obavestenje = new Obavestenje(dto.getTekst(), dto.getDatum(), predmet, autor);
+        Obavestenje obavestenje = new Obavestenje(dto.getTekst(), datumZaUpis, predmet, autor);
         Obavestenje sacuvano = obavestenjeRepo.save(obavestenje);
 
         // Mapiranje u DTO
@@ -72,7 +76,7 @@ public class ObavestenjeService {
         }
 
         obavestenje.setTekst(dto.getTekst());
-        obavestenje.setDatum(dto.getDatum());
+        obavestenje.setDatum(LocalDate.now());
 
         // Po potrebi možeš dozvoliti i promenu predmeta:
         if (!obavestenje.getPredmet().getId().equals(dto.getPredmetId())) {
@@ -108,6 +112,24 @@ public class ObavestenjeService {
 
         obavestenjeRepo.delete(obavestenje);
     }
+    
+    public List<ObavestenjeResponseDTO> findObavestenjaZaProfesora() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User profesor = userRepo.findByEmail(username)
+            .orElseThrow(() -> new RuntimeException("Ulogovani profesor nije pronađen"));
+
+        return obavestenjeRepo.findByAutorId(profesor.getId()).stream()
+            .map(obavestenje -> new ObavestenjeResponseDTO(
+                obavestenje.getId(),
+                obavestenje.getTekst(),
+                obavestenje.getDatum(),
+                obavestenje.getPredmet().getId(),
+                obavestenje.getPredmet().getNaziv(),
+                obavestenje.getAutor().getId(),
+                obavestenje.getAutor().getIme() + " " + obavestenje.getAutor().getPrezime()
+            ))
+            .collect(Collectors.toList());
+    }
 
 
     @Autowired
@@ -132,6 +154,19 @@ public class ObavestenjeService {
                         obavestenje.getAutor().getIme() + " " + obavestenje.getAutor().getPrezime()
                 ))
                 .collect(Collectors.toList());
+    }
+    
+    public List<ObavestenjeResponseDTO> svaObavestenjaDTO() {
+        return obavestenjeRepo.findAll().stream()
+            .map(obavestenje -> new ObavestenjeResponseDTO(
+                obavestenje.getId(),
+                obavestenje.getTekst(),
+                obavestenje.getDatum(),
+                obavestenje.getPredmet().getId(),
+                obavestenje.getPredmet().getNaziv(),
+                obavestenje.getAutor().getId(),
+                obavestenje.getAutor().getIme() + " " + obavestenje.getAutor().getPrezime()
+            )).collect(Collectors.toList());
     }
 
     public List<Obavestenje> svaObavestenja() {

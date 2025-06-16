@@ -15,5 +15,5 @@ public interface PredmetRepository extends JpaRepository<Predmet, Long> {
     
     List<Predmet> findByGodinaStudijaIdAndDeletedFalse(Long godinaStudijaId);
 
-
+    List<Predmet> findByProfesoriProfesorId(Long profesorId);
 }

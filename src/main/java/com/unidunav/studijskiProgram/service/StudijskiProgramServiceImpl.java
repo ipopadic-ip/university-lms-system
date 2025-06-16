@@ -275,15 +275,15 @@ public class StudijskiProgramServiceImpl implements StudijskiProgramService {
 
         dto.setTipStudijaUri(entity.getTipStudijaUri());
 
-        // Ako želiš odmah da ubaciš i naziv RDF tipa
-//        if (entity.getTipStudijaUri() != null) {
-//            try {
-//                TipStudijaDTO rdfDto = rdfTipStudijaService.findByUri(entity.getTipStudijaUri());
-//                dto.setTipStudija(rdfDto); // puni DTO direktno iz RDF-a
-//            } catch (Exception e) {
-//                // Možeš logovati ili ignorisati ako RDF entitet ne postoji
-//            }
-//        }
+         //Ako želiš odmah da ubaciš i naziv RDF tipa
+        if (entity.getTipStudijaUri() != null) {
+            try {
+                TipStudijaDTO rdfDto = rdfTipStudijaService.findByUri(entity.getTipStudijaUri());
+                dto.setTipStudija(rdfDto); // puni DTO direktno iz RDF-a
+            } catch (Exception e) {
+                // Možeš logovati ili ignorisati ako RDF entitet ne postoji
+            }
+        }
 
         if (entity.getRukovodilac() != null) {
             dto.setRukovodilac(profesorService.toDTO(entity.getRukovodilac()));

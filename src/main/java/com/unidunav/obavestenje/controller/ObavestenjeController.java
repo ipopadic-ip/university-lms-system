@@ -37,6 +37,11 @@ public class ObavestenjeController {
         return ResponseEntity.ok(obavestenjeService.nadjiPoId(id));
     }
     
+    @GetMapping("/dto")
+    public List<ObavestenjeResponseDTO> svaObavestenjaDTO() {
+        return obavestenjeService.svaObavestenjaDTO();
+    }
+    
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyRole('PROFESOR', 'SLUZBENIK')")
     public ResponseEntity<ObavestenjeResponseDTO> izmeniObavestenje(@PathVariable Long id, @RequestBody ObavestenjeDTO dto) {
@@ -55,5 +60,29 @@ public class ObavestenjeController {
         List<ObavestenjeResponseDTO> obavestenja = obavestenjeService.findObavestenjaZaStudenta(id);
         return ResponseEntity.ok(obavestenja);
     }
+    
+    @GetMapping("/profesor")
+    public ResponseEntity<List<ObavestenjeResponseDTO>> getObavestenjaZaProfesora() {
+        return ResponseEntity.ok(obavestenjeService.findObavestenjaZaProfesora());
+    }
+    
+    @GetMapping("/profesor/{id}")
+    @PreAuthorize("hasRole('PROFESOR')")
+    public ResponseEntity<ObavestenjeResponseDTO> nadjiPoIdZaProfesora(@PathVariable Long id) {
+        Obavestenje obavestenje = obavestenjeService.nadjiPoId(id);
+
+        ObavestenjeResponseDTO dto = new ObavestenjeResponseDTO();
+        dto.setId(obavestenje.getId());
+        dto.setTekst(obavestenje.getTekst());
+        dto.setDatum(obavestenje.getDatum());
+        dto.setPredmetId(obavestenje.getPredmet().getId());
+        dto.setPredmetNaziv(obavestenje.getPredmet().getNaziv());
+        dto.setAutorId(obavestenje.getAutor().getId());
+        dto.setAutorIme(obavestenje.getAutor().getIme() + " " + obavestenje.getAutor().getPrezime());
+
+        return ResponseEntity.ok(dto);
+    }
+    
+    
 
 }
