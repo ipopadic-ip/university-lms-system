@@ -14,4 +14,8 @@ export class SilabusService {
   getSilabusByPredmetId(predmetId: number): Observable<Silabus> {
     return this.http.get<Silabus>(`${this.apiUrl}/predmet/${predmetId}`);
   }
+
+  updateSilabus(id: number, silabus: Silabus): Observable<Silabus> {
+    return this.http.put<Silabus>(`${this.apiUrl}/${id}`, silabus);
+  }
 }

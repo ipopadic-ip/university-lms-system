@@ -1,0 +1,14 @@
+<div class="container">
+  <div class="pregled-container">
+    <h2>Predmeti koje predajete</h2>
+    <div *ngFor="let predmet of predmeti" class="predmet-card">
+      <h3>{{ predmet.naziv }}</h3>
+      <p><strong>ECTS:</strong> {{ predmet.ects }}</p>
+      <p>{{ predmet.informacijeOPredmetu }}</p>
+      <button class="btn-edit" (click)="otvoriSilabus(predmet.id)">Silabus</button>
+      <button class="btn-edit ml-10" (click)="otvoriStudente(predmet.id)">Studenti</button>
+      <button class="btn-edit ml-10" (click)="otvoriEvaluacije(predmet.id)">Zakazane evaluacije</button>
+
+    </div>
+  </div>
+</div>

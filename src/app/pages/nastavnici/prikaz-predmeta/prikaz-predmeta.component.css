@@ -1,0 +1,36 @@
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.pregled-container {
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+}
+
+.pregled-container h2 {
+  margin-bottom: 15px;
+}
+
+.predmet-card {
+  background-color: white;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-edit {
+  border: 1px solid #666;
+  padding: 5px 12px;
+  border-radius: 4px;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.ml-10 {
+  margin-left: 10px;
+}
+

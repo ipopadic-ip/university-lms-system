@@ -1,0 +1,26 @@
+<div class="container mt-4">
+  <h2>Studenti</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Indeks</th>
+        <th>Ime</th>
+        <th>Prezime</th>
+        <th>Detalji</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let student of studenti">
+        <td>{{ student.brojIndeksa }}</td>
+        <td>{{ student.ime }}</td>
+        <td>{{ student.prezime }}</td>
+        <td>
+          <button class="btn btn-outline-primary btn-sm" (click)="toggleEvaluacije(student)">
+            Detalji
+          </button>
+        </td>
+      </tr>
+      
+    </tbody>
+  </table>
+</div>

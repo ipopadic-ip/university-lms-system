@@ -1,0 +1,60 @@
+<div *ngIf="student && istorija as i" class="studenti-kartica">
+  <h2>{{ student.ime }} {{ student.prezime }}</h2>
+  <hr>
+  <p><strong>Indeks:</strong> {{ student.brojIndeksa }}</p>
+  <hr>
+  <p><strong>Upis:</strong> {{ student.godinaUpisa }}</p>
+  <hr>
+  <p><strong>Prosečna ocena:</strong> {{ i.prosecnaOcena | number:'1.1-1' }}</p>
+  <hr>
+  <p><strong>Ukupno ECTS:</strong> {{ i.ukupnoEcts  }}</p>
+  <hr>
+
+  <!-- Položeni ispiti -->
+  <ng-container *ngIf="polozeniFiltrirani.length > 0; else nemaPolozenih">
+    <p *ngFor="let p of polozeniFiltrirani">
+      <strong>Položen ispit:</strong> {{ p.nazivPredmeta  }} – Ocena: {{ p.ocena  }} – Bodovi:
+      {{ p.brojBodova  }} – ECTS: {{ p.brojECTS  }}
+    </p>
+  </ng-container>
+  <ng-template #nemaPolozenih>
+    <p><strong>Položeni ispiti:</strong> Nema položenih ispita.</p>
+  </ng-template>
+  <hr>
+
+  <!-- Neuspešna polaganja -->
+  <ng-container *ngIf="i.neuspesni.length > 0; else nemaNeuspesnih">
+    <p *ngFor="let n of i.neuspesni">
+      <strong>Neuspešno polaganje:</strong> {{ n.nazivPredmeta  }}
+    </p>
+  </ng-container>
+  <ng-template #nemaNeuspesnih>
+    <p><strong>Neuspešna polaganja:</strong> Nema neuspešnih polaganja.</p>
+  </ng-template>
+  <hr>
+
+  <!-- Prijavljeni ispiti -->
+  <ng-container *ngIf="i.prijavljeni.length > 0; else nemaPrijavljenih">
+    <p *ngFor="let p of i.prijavljeni">
+      <strong>Prijavljen ispit:</strong> {{ p.nazivPredmeta  }}
+    </p>
+  </ng-container>
+  <ng-template #nemaPrijavljenih>
+    <p><strong>Prijavljeni ispiti:</strong> Nema prijavljenih ispita.</p>
+  </ng-template>
+  <hr>
+
+  <!-- Prijave prestupa -->
+  <ng-container *ngIf="i.prestupi.length > 0; else nemaPrestupa">
+    <p *ngFor="let pr of i.prestupi">
+      <strong>Prijava prestupa:</strong> {{ pr.nazivPredmeta  }} – Opis: {{ pr.opis  }}
+    </p>
+  </ng-container>
+  <ng-template #nemaPrestupa>
+    <p><strong>Prijava prestupa:</strong> Nema prestupa.</p>
+  </ng-template>
+  <hr>
+
+  <!-- Završni rad -->
+  <p><strong>Završni rad:</strong> {{ student.zavrsniRad ? student.zavrsniRad : 'Nema podataka.' }}</p>
+</div>

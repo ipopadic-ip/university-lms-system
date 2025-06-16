@@ -64,6 +64,7 @@ export const SLUZBENIK_ROUTES: Routes = [
     path: '',
     component: SluzbenikDashboardComponent,
     children: [
+      { path: '', redirectTo: 'obavestenja', pathMatch: 'full' },
       {
         path: 'moj-profil',
         loadComponent: () => import('./sluzbenik-profil/sluzbenik-profil.component')

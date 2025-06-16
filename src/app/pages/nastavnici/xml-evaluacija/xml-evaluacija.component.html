@@ -1,0 +1,21 @@
+<div class="p-4">
+  <h2 class="text-lg font-bold mb-4">Dodavanje rezultata evaluacije (XML)</h2>
+
+  <div class="mb-6">
+    <label class="block mb-2 font-semibold">Upload XML fajla:</label>
+    <input type="file" (change)="onFileChange($event)" class="mb-2" />
+    <button (click)="uploadXmlFile()" class="btn btn-primary btn-sm">Pošalji fajl</button>
+  </div>
+
+  <hr class="my-4" />
+
+  <!-- <div class="mb-6">
+    <label class="block mb-2 font-semibold">Nalepi XML sadržaj:</label>
+    <textarea [(ngModel)]="xmlContent" rows="10" class="w-full border p-2 rounded" placeholder="Nalepi XML ovde..."></textarea>
+    <button (click)="pasteXmlContent()" class="bg-green-600 text-white px-4 py-2 rounded mt-2">Pošalji sadržaj</button>
+  </div> -->
+
+  <div *ngIf="responseMessage" class="mt-4 p-3 border border-gray-400 rounded bg-gray-50">
+    <strong>Odgovor:</strong> {{ responseMessage }}
+  </div>
+</div>

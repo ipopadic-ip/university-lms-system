@@ -1,0 +1,20 @@
+<div class="container">
+  <h2>Termini nastave</h2>
+  <div *ngFor="let termin of termini" class="card my-3">
+    <div class="card-body">
+      <h5 class="card-title">{{ termin.nazivPredmeta }}</h5>
+      <p><strong>Početak:</strong> {{ termin.terminPocetka }}</p>
+      <p><strong>Završetak:</strong> {{ termin.terminZavrsetka }}</p>
+      <p><strong>Ishod:</strong> {{ termin.ishodTema || 'Ishod nije definisan' }}</p>
+
+      <button class="btn btn-primary" (click)="otvoriFormu(termin.id)">Izmeni ishod</button>
+
+      <div *ngIf="prikaziFormu[termin.id]" class="mt-2">
+        <form [formGroup]="formaIshod[termin.id]" (ngSubmit)="sacuvajIshod(termin.id)">
+          <input class="form-control" formControlName="tema" placeholder="Unesi novu temu" />
+          <button type="submit" class="btn btn-success mt-2">Sačuvaj</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

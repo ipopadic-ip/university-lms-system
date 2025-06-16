@@ -1,0 +1,37 @@
+<div class="obavestenje-form">
+  <h3>{{ isEditing ? 'Izmena obaveštenja' : 'Novo obaveštenje' }}</h3>
+
+  <form (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="tekst" class="form-label">Tekst</label>
+      <textarea id="tekst" [(ngModel)]="obavestenje.tekst" name="tekst" class="form-control" required></textarea>
+    </div>
+
+    <!-- Prikaz predmeta -->
+    <div class="mb-3" *ngIf="isEditing; else noviPredmet">
+      <label class="form-label">Predmet</label>
+      <input class="form-control" [value]="obavestenje.predmetNaziv" disabled />
+
+
+    </div>
+
+    <ng-template #noviPredmet>
+      <div class="mb-3">
+        <label for="predmetId" class="form-label">Predmet</label>
+        <select id="predmetId" [(ngModel)]="obavestenje.predmetId" name="predmetId" class="form-control" required>
+          <option *ngFor="let p of predmeti" [value]="p.id">{{ p.naziv }}</option>
+        </select>
+      </div>
+    </ng-template>
+
+    <!-- Datum se automatski postavlja na backendu, ne prikazuje se -->
+
+    <div class="d-flex gap-2">
+      <button type="submit" class="btn btn-success">Sačuvaj</button>
+      <button type="button" class="btn btn-secondary" (click)="cancel()">Otkaži</button>
+      <button *ngIf="isEditing" class="btn btn-danger float-end" type="button" (click)="obrisi()">
+        Obriši
+      </button>
+    </div>
+  </form>
+</div>

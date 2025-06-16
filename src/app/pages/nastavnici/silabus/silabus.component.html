@@ -1,0 +1,26 @@
+<div class="silabus-card">
+  <h2 class="naslov">Silabus predmeta</h2>
+
+  <div class="polje" *ngIf="!editMode">
+    <label>Sadržaj:</label>
+    <p>{{ silabus.sadrzaj || 'Ne postoji silabus za ovaj predmet.' }}</p>
+
+    <button class="btn btn-primary" type="button" (click)="toggleEdit()">Izmeni</button>
+  </div>
+
+  <!-- Izmena silabusa -->
+  <div class="edit-form" *ngIf="editMode && silabus">
+    <label for="sadrzaj">Izmeni sadržaj:</label>
+    <textarea
+      id="sadrzaj"
+      [(ngModel)]="silabus.sadrzaj"
+      rows="6"
+      aria-label="Unesite novi sadržaj silabusa"
+    ></textarea>
+
+    <div class="dugmad">
+      <button class="btn btn-success" (click)="saveChanges()">Sačuvaj</button>
+      <button class="btn btn-danger float-end" (click)="cancelEdit()">Otkaži</button>
+    </div>
+  </div>
+</div>

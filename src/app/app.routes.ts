@@ -19,27 +19,28 @@ export const routes: Routes = [
   },
   {
     path: 'profesor',
-    loadComponent: () => import('./pages/nastavnici/nastavnik-dashboard/nastavnik-dashboard.component').then(m => m.NastavnikDashboardComponent),
+    loadChildren: () => import('./pages/nastavnici/nastavnik.routes')
+      .then(m => m.profesorRoutes),
     canActivate: [RoleGuard(['PROFESOR'])],
   },
- {
-  path: 'student',
-  loadChildren: () =>
-    import('./pages/studenti/student.routes')
-      .then(m => m.STUDENT_ROUTES),
-  canActivate: [RoleGuard(['STUDENT'])],
-},
-{
-   path: 'sluzbenik',
-  loadChildren: () => import('./pages/studentska_sluzba/sluzbenik-routes')
-    .then(m => m.SLUZBENIK_ROUTES),
-  canActivate: [RoleGuard(['SLUZBENIK'])]
-},
-{
-  path: 'komercijalista',
-  loadChildren: () => import('./pages/komercijalista/komercijalista-routes')
-    .then(m => m.KOMERCIJALISTA_ROUTES),
-  canActivate: [RoleGuard(['KOMERCIJALISTA'])]
-}
+  {
+    path: 'student',
+    loadChildren: () =>
+      import('./pages/studenti/student.routes')
+        .then(m => m.STUDENT_ROUTES),
+    canActivate: [RoleGuard(['STUDENT'])],
+  },
+  {
+    path: 'sluzbenik',
+    loadChildren: () => import('./pages/studentska_sluzba/sluzbenik-routes')
+      .then(m => m.SLUZBENIK_ROUTES),
+    canActivate: [RoleGuard(['SLUZBENIK'])]
+  },
+  {
+    path: 'komercijalista',
+    loadChildren: () => import('./pages/komercijalista/komercijalista-routes')
+      .then(m => m.KOMERCIJALISTA_ROUTES),
+    canActivate: [RoleGuard(['KOMERCIJALISTA'])]
+  }
 ];
 

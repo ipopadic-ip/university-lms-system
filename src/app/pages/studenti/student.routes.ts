@@ -7,6 +7,7 @@ export const STUDENT_ROUTES: Routes = [
     path: '',
     component: StudentDashboardComponent,
     children: [
+      { path: '', redirectTo: 'predmeti', pathMatch: 'full' },
       { path: 'predmeti', component: PregledPredmetaComponent },
       {
         path: 'moj-profil',

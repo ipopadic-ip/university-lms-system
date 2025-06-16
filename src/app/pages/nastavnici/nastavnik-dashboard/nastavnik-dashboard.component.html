@@ -1,1 +1,71 @@
-<p>nastavnik-dashboard works!</p>
+<!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <span class="navbar-brand">Profesorski panel</span>
+    <div class="collapse navbar-collapse justify-content-end">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/profesor/predmeti" routerLinkActive="active">Pregled predmeta</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/profesor/termini-nastave" routerLinkActive="active">Termini nastave</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/profesor/obavestenja" routerLinkActive="active">Obaveštenja</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/profesor/studenti" routerLinkActive="active">Studenti</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/profesor/oceni" routerLinkActive="active">Oceni</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/profesor/profil" routerLinkActive="active">Profil</a>
+        </li>
+        <li class="nav-item">
+          <button class="btn btn-danger ms-3" (click)="logout()">Logout</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-4">
+  <router-outlet></router-outlet>
+</div> -->
+
+
+<!-- Header sekcija -->
+<div class="header-container">
+  <!-- Logo -->
+  <div class="logo-header">
+    <img src="assets/logo.PNG" alt="Univerzitet Dunav Logo" class="logo" />
+  </div>
+
+  <!-- Naslov u sredini -->
+  <div class="header-title">
+    <h2>Dobrodošli na panel profesora</h2>
+  </div>
+
+  <!-- Profil i Logout dugmad -->
+  <div class="logout-container">
+    <button class="profil-button" routerLink="/profesor/profil">Profil</button>
+    <button class="logout-button" (click)="logout()">Logout</button>
+  </div>
+</div>
+
+<!-- Glavni raspored: Sidebar + Sadržaj -->
+<div class="dashboard-layout">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <button routerLink="/profesor/predmeti" routerLinkActive="active">Prikaz predmeta</button>
+    <button routerLink="/profesor/termini-nastave" routerLinkActive="active">Termini nastave</button>
+    <button routerLink="/profesor/obavestenja" routerLinkActive="active">Obaveštenja</button>
+    <button routerLink="/profesor/oceni" routerLinkActive="active">Ocenjivanje</button>
+    <button routerLink="/profesor/studenti" routerLinkActive="active">Studenti</button>
+  </div>
+
+  <!-- Glavni sadržaj -->
+  <div class="main-content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

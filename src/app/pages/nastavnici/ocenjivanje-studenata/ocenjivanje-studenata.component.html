@@ -1,0 +1,61 @@
+<div class="container mt-4">
+    <h2>Ocenjivanje studenata</h2>
+
+    <div class="mt-3 mb-4">
+        <a class="btn btn-primary btn-sm" [routerLink]="['/profesor/xml-evaluacija']">XML evaluacija</a>
+    </div>
+
+    <div class="form-group mt-3 mb-4">
+        <label for="predmet">Izaberite predmet:</label>
+        <select class="form-control" [(ngModel)]="izabraniPredmetId" (change)="onPredmetChange()">
+            <option *ngFor="let predmet of predmeti" [value]="predmet.id">{{ predmet.naziv }}</option>
+        </select>
+    </div>
+
+    <div class="form-group mt-2 mb-3">
+        <label for="tipEvaluacije">Filtriraj po tipu evaluacije:</label>
+        <select class="form-control" [(ngModel)]="izabraniTip" (change)="filtrirajEvaluacije()">
+            <option *ngFor="let tip of tipoviEvaluacije" [value]="tip">{{ tip }}</option>
+        </select>
+    </div>
+
+    <div class="form-group mt-2 mb-3">
+        <label for="search">Pretraga studenata:</label>
+        <input type="text" id="search" class="form-control" [(ngModel)]="searchTerm" (input)="filtrirajEvaluacije()"
+            placeholder="Pretraga po imenu, prezimenu ili indeksu">
+    </div>
+
+
+    <table *ngIf="evaluacije.length > 0" class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Indeks</th>
+                <th>Ime</th>
+                <th>Prezime</th>
+                <th>Tip evaluacije</th>
+                <th>Datum</th>
+                <th>Upis bodova</th>
+                <th>Trenutna ocena</th>
+                <th>Ukupno bodova</th>
+                <th>Akcija</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let e of filtriraneEvaluacije">
+                <td>{{ e.brojIndeksa }}</td>
+                <td>{{ e.ime }}</td>
+                <td>{{ e.prezime }}</td>
+                <td>{{ e.tipEvaluacije }}</td>
+                <td>{{ e.datumEvaluacije | date:'dd.MM.yyyy.' }}</td>
+                <td>
+                    <input type="number" class="form-control" [(ngModel)]="noviBodovi[e.evaluacijaId]" />
+                </td>
+                <td>{{ e.trenutnaOcena === null ? 'nije položen' : e.trenutnaOcena }}</td>
+                <td>{{ e.ukupnoBodova }}</td>
+                <td>
+                    <button class="btn btn-primary btn-sm" (click)="sacuvajBodove(e.evaluacijaId)">Sačuvaj</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

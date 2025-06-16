@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { StorageService } from './storage.service'; // dodato ovo
+import { StorageService } from './storage.service'; 
 
 @Injectable({
   providedIn: 'root',
@@ -13,14 +13,14 @@ export class AuthService {
   private tokenKey = 'authToken';
   private rolesKey = 'userRoles';
 
-  isLoggedIn$ = new BehaviorSubject<boolean>(false); // inicijalno false
+  isLoggedIn$ = new BehaviorSubject<boolean>(false);
 
   constructor(
     private http: HttpClient,
     private router: Router,
-    private storageService: StorageService // sada je sigurno ubačen
+    private storageService: StorageService 
   ) {
-    this.isLoggedIn$.next(this.hasToken()); // sada možeš pozvati
+    this.isLoggedIn$.next(this.hasToken());
   }
 
   login(email: string, password: string): Observable<any> {
@@ -91,6 +91,24 @@ export class AuthService {
     return 0;
   }
 }
-  
+
+  getCurrentUser(): any {
+  const token = this.getToken();
+  if (!token) return null;
+
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    console.log(payload);
+
+    return {
+      id: payload.id,
+      email: payload.sub,
+      roles: payload.roles
+    };
+  } catch (e) {
+    console.error('Greška pri dekodiranju tokena', e);
+    return null;
+  }
+}
   
 }

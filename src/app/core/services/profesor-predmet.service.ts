@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 export class ProfesorPredmetService {
   private baseUrl = 'http://localhost:8080/api/profesor-predmet';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getAllAdmin(): Observable<ProfesorPredmet[]> {
     return this.http.get<ProfesorPredmet[]>(`${this.baseUrl}/admin`);
@@ -24,20 +24,23 @@ export class ProfesorPredmetService {
   }
 
   createProfesorPredmet(dto: any) {
-  return this.http.post<ProfesorPredmet>(`${this.baseUrl}`, dto);
-}
+    return this.http.post<ProfesorPredmet>(`${this.baseUrl}`, dto);
+  }
 
-    updateProfesorPredmet(id: number, dto: any) {
+  updateProfesorPredmet(id: number, dto: any) {
     return this.http.put<ProfesorPredmet>(`${this.baseUrl}/${id}`, dto);
-    }
+  }
 
-    getProfesorPredmetiByProfesorId(id: number) {
+  getProfesorPredmetiByProfesorId(id: number) {
     return this.http.get<ProfesorPredmet[]>(`${this.baseUrl}/profesor/${id}`);
-    }
+  }
 
-    getProfesorPredmetById(id: number) {
-        return this.http.get<ProfesorPredmet>(`${this.baseUrl}/${id}`);
-    }
+  getProfesorPredmetById(id: number) {
+    return this.http.get<ProfesorPredmet>(`${this.baseUrl}/${id}`);
+  }
 
+  getMojiPredmeti(): Observable<any[]> {
+    return this.http.get<any[]>('http://localhost:8080/api/profesor-predmet/moji-termini');
+  }
 
 }

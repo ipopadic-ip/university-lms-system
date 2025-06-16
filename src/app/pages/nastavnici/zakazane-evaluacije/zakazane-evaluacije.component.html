@@ -1,0 +1,17 @@
+<div class="eval-modal mb-4 p-3 border bg-white rounded">
+  <h4>Odabir tipa evaluacije</h4>
+
+  <label>Odaberite datum i vreme evaluacije:</label>
+  <select class="form-control mb-2" [(ngModel)]="izabranoVreme">
+    <option *ngFor="let datum of jedinstvenaVremena" [value]="datum">
+      {{ datum | date:'dd.MM.yyyy HH:mm' }}
+    </option>
+  </select>
+
+  <label>Odaberite tip evaluacije:</label>
+  <select class="form-control mb-2" [(ngModel)]="izabraniTipId">
+    <option *ngFor="let tip of tipoviEvaluacije" [value]="tip.id">{{ tip.tip }}</option>
+  </select>
+
+  <button (click)="promeniGrupnoTipEvaluacije()" class="btn btn-success">Sačuvaj promene</button>
+</div>
