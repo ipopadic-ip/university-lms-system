@@ -106,6 +106,12 @@ This is a full-stack web application developed using **Spring Boot** for the bac
 - Issue or request textbooks from the university library
 - Request office supplies
 
+### Commercialist
+- View all textbook and office supply requests submitted by student services staff  
+- Order textbooks and office supplies based on submitted requisitions  
+- Update inventory and availability tables once materials have been received  
+- Ensure that ordered items are properly recorded and made available to staff and students
+
 ### Administrators
 - Manage dictionaries and codebooks
 - Manage registered users
