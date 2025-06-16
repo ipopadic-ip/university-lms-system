@@ -153,8 +153,6 @@ This is a full-stack web application developed using **Spring Boot** for the bac
 
 ## 🏁 Getting Started (Optional Section)
 
-> _(You can add this if you want to help others run your project locally)_
-
 ```bash
 # Backend
 cd back
