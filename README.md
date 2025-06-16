@@ -151,7 +151,7 @@ This is a full-stack web application developed using **Spring Boot** for the bac
 
 ---
 
-## 🏁 Getting Started (Optional Section)
+## 🏁 Getting Started
 
 ```bash
 # Backend
