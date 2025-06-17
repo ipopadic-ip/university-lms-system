@@ -157,6 +157,24 @@ This is a full-stack web application developed using **Spring Boot** for the bac
 
 ---
 
+## Author
+
+**Ilija Popadic, Andrej Vukoje, Nikola Albulov**
+
+## License
+
+This project is licensed under the **Attribution License**.
+
+You are free to use, modify, and share this code for personal purposes, **as long as proper credit is given**.  
+That includes:
+
+- Mentioning our full name **Ilija Popadic, Andrej Vukoje, Nikola Albulov** visibly in your project or documentation.
+- Providing a working link to my GitHub profile: [https://github.com/ipopadic-ip](https://github.com/ipopadic-ip)
+
+Failure to provide visible credit is a violation of this license.
+
+---
+
 ## 🏁 Getting Started
 
 ```bash
@@ -168,3 +186,6 @@ cd back
 cd front
 npm install
 ng serve
+
+
+
