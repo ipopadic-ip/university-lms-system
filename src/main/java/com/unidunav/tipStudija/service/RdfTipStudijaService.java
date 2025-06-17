@@ -359,15 +359,29 @@ public class RdfTipStudijaService {
             // Napravi SPARQL boolean literal (true ili false)
             String deletedValue = queryText.trim().equalsIgnoreCase("true") ? "true" : "false";
 
-            String sparqlQuery = String.format("""
-                PREFIX ns: <%s>
-                SELECT ?s ?tip ?deleted WHERE {
-                    ?s a ns:TipStudija ;
-                       ns:tip ?tip ;
-                       ns:deleted ?deleted .
-                    FILTER(?deleted = %s)
-                }
-                """, NS, deletedValue);
+            // String sparqlQuery = String.format("""
+            //     PREFIX ns: <%s>
+            //     SELECT ?s ?tip ?deleted WHERE {
+            //         ?s a ns:TipStudija ;
+            //            ns:tip ?tip ;
+            //            ns:deleted ?deleted .
+            //         FILTER(?deleted = %s)
+            //     }
+            //     """, NS, deletedValue);
+
+             String sparqlQuery = String.format("""
+            	    PREFIX ns: <%s>
+            	    SELECT ?s ?tip ?deleted WHERE {
+            	        ?s a ns:TipStudija ;
+            	           ns:tip ?tip .
+            	        OPTIONAL { ?s ns:deleted ?deleted }
+            	        %s
+            	    }
+            	    """, NS,
+            	    deletedValue.equals("true")
+            	        ? "FILTER(?deleted = true)"
+            	        : "FILTER(!BOUND(?deleted) || ?deleted = false)"
+            	);
 
             Query query = QueryFactory.create(sparqlQuery);
             try (QueryExecution qexec = QueryExecutionFactory.create(query, model)) {
@@ -381,7 +395,8 @@ public class RdfTipStudijaService {
                     TipStudijaDTO dto = new TipStudijaDTO();
                     dto.setUri(s.getURI());
                     dto.setTip(tip.getString());
-                    dto.setDeleted(deleted.getBoolean());
+                    dto.setDeleted(deleted != null && deleted.getBoolean());
+                    // dto.setDeleted(deleted.getBoolean());
                     result.add(dto);
                 }
             }
