@@ -169,7 +169,7 @@ You are free to use, modify, and share this code for personal purposes, **as lon
 That includes:
 
 - Mentioning our full name **Ilija Popadic, Andrej Vukoje, Nikola Albulov** visibly in your project or documentation.
-- Providing a working link to my GitHub profile: [https://github.com/ipopadic-ip](https://github.com/ipopadic-ip)
+- Providing a working link to this GitHub Repository: [https://github.com/ipopadic-ip/UniDunav_Projekat](https://github.com/ipopadic-ip/UniDunav_Projekat)
 
 Failure to provide visible credit is a violation of this license.
 
