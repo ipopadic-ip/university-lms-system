@@ -8,17 +8,24 @@
 
 <div *ngIf="student">
   <h5>Student: {{ student.ime }} {{ student.prezime }} ({{ student.brojIndeksa }})</h5>
+  <div *ngIf="porukaGreske" class="text-danger mt-2">
+  {{ porukaGreske }}
+</div>
 
   <div class="mt-3">
-    <h6>Izaberi predmete:</h6>
-    <div *ngFor="let predmet of predmeti" class="form-check">
-      <input type="checkbox" class="form-check-input" [id]="'predmet_' + predmet.id"
-             (change)="togglePredmet(predmet.id)" />
-      <label class="form-check-label" [for]="'predmet_' + predmet.id">
-        {{ predmet.naziv }} – godina: {{ predmet.godinaStudija }}
-      </label>
-    </div>
+  <h6>Pretraga i izbor predmeta:</h6>
+
+  <input type="text" class="form-control mb-2" placeholder="Pretraga po imenu predmeta"
+         [(ngModel)]="filterPredmet" name="pretragaPredmeta" />
+
+  <div *ngFor="let predmet of filtriraniPredmeti()" class="form-check">
+    <input type="checkbox" class="form-check-input" [id]="'predmet_' + predmet.id"
+           (change)="togglePredmet(predmet.id)" />
+    <label class="form-check-label" [for]="'predmet_' + predmet.id">
+      {{ predmet.naziv }}
+    </label>
   </div>
+</div>
 
   <button class="btn btn-success mt-3" (click)="upisiStudenta()"
   [disabled]="!student || izabraniPredmeti.size === 0">Upiši studenta</button>

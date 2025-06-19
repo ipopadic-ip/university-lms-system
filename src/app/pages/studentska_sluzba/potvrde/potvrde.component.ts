@@ -16,6 +16,7 @@ export class PotvrdeComponent implements OnInit {
   studenti: any[] = [];
   potvrde: any[] = [];
   pretraga: string = '';
+  selektovaniStudentId: number | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -34,18 +35,32 @@ export class PotvrdeComponent implements OnInit {
   }
 
   pretraziStudente(): void {
-    if (this.pretraga.length < 2) return;
+    if (this.pretraga.length < 2) {
+      this.studenti = [];
+      return;
+    }
+
     this.studentService.pretraziPoBrojuIndeksa(this.pretraga).subscribe(res => {
       this.studenti = res;
+
+      // Ako smo već izabrali studenta, zadrži ga u selekciji
+      if (this.selektovaniStudentId) {
+        const postoji = this.studenti.find(s => s.id === this.selektovaniStudentId);
+        if (postoji) {
+          this.forma.get('studentId')?.setValue(this.selektovaniStudentId);
+        }
+      }
     });
   }
 
   izdajPotvrdu(): void {
     if (this.forma.invalid) return;
 
+    const selectedId = this.forma.get('studentId')?.value;
+    this.selektovaniStudentId = selectedId;
+
     this.potvrdaService.izdajPotvrdu(this.forma.value).subscribe(() => {
-      this.forma.reset();
-      this.studenti = [];
+      this.forma.patchValue({ tip: '', tekst: '' });  // resetuj samo unos, ne studentId
       this.ucitajPotvrde();
     });
   }
