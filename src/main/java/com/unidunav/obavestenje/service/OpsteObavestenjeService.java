@@ -18,17 +18,20 @@ public class OpsteObavestenjeService {
     private OpsteObavestenjeRepository repository;
 
     public List<OpsteObavestenje> findAll() {
-        return repository.findAll();
+        return repository.findByAktivanTrue();
     }
+
 
     public OpsteObavestenje save(OpsteObavestenje obavestenje) {
         return repository.save(obavestenje);
     }
 
     public void delete(Long id) {
-        repository.deleteById(id);
+        repository.findById(id).ifPresent(o -> {
+            o.setAktivan(false);
+            repository.save(o);
+        });
     }
-
     public OpsteObavestenje findById(Long id) {
         return repository.findById(id).orElse(null);
     }

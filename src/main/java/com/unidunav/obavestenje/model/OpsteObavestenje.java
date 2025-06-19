@@ -22,7 +22,17 @@ public class OpsteObavestenje {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "autor_id")
     @JsonIgnore 
-    private User autor;; 
+    private User autor;
+    @Column(nullable = false)
+    private boolean aktivan = true; 
+
+    public boolean isAktivan() {
+        return aktivan;
+    }
+
+    public void setAktivan(boolean aktivan) {
+        this.aktivan = aktivan;
+    }
     
     
     // Getteri i setteri

@@ -23,6 +23,7 @@ public interface StudentService {
     List<PredmetDTO> getPredmetiKojeStudentSlusa(Long studentId);
     List<ObavestenjeStudentuDTO> getObavestenjaZaStudenta(Long studentId);
     List<StudentDTO> findByBrojIndeksa(String indeks);
+    List<StudentDTO> findByBrojIndeksa2(String indeks);
     
     List<StudentDTO> findStudentiZaProfesora(Long profesorId);
     StudentIstorijaStudiranjaResponseDTOProfesor getStudentIstorijaStudiranjaProfesor(Long studentId);

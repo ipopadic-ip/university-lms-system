@@ -240,6 +240,16 @@ public class StudentServiceImpl implements StudentService {
             return dto;
         }).collect(Collectors.toList());
     }
+    public List<StudentDTO> findByBrojIndeksa2(String indeks) {
+        return repository.findByBrojIndeksaAndUserNotDeleted(indeks).stream().map(student -> {
+            StudentDTO dto = new StudentDTO();
+            dto.setId(student.getId());
+            dto.setIme(student.getUser().getIme());
+            dto.setPrezime(student.getUser().getPrezime());
+            dto.setBrojIndeksa(student.getBrojIndeksa());
+            return dto;
+        }).collect(Collectors.toList());
+    }
     
     @Override
     public List<StudentDTO> findStudentiZaProfesora(Long profesorId) {

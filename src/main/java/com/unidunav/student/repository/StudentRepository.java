@@ -17,5 +17,8 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 	
 	@Query("SELECT s FROM Student s JOIN FETCH s.user u WHERE u.deleted = false")
 	List<Student> findAllWithUser();
+	
+	@Query("SELECT s FROM Student s JOIN s.user u WHERE LOWER(s.brojIndeksa) = LOWER(:indeks) AND u.deleted = false")
+	List<Student> findByBrojIndeksaAndUserNotDeleted(@Param("indeks") String indeks);
 
 }

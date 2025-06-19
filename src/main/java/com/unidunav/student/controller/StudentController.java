@@ -48,6 +48,11 @@ public class StudentController {
     public List<StudentDTO> pretraziPoIndeksu(@RequestParam String indeks) {
         return service.findByBrojIndeksa(indeks);
     }
+    @PreAuthorize("permitAll()")
+    @GetMapping("/pretraga2")
+    public List<StudentDTO> pretraziPoIndeksu2(@RequestParam String indeks) {
+        return service.findByBrojIndeksa2(indeks);
+    }
     
     @GetMapping("/{studentId}/obavestenja")
     public ResponseEntity<List<ObavestenjeStudentuDTO>> getObavestenja(@PathVariable Long studentId) {
